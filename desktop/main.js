@@ -8,17 +8,17 @@ const path = require('path')
 let isShown = true
 
 app.win = null
-
 app.on('ready', () => {
   app.win = new BrowserWindow({
-    width: 780,
+    width: 1780,
     height: 462,
     minWidth: 380,
     minHeight: 360,
-    backgroundColor: '#000',
+    /* backgroundColor would have been set here */
     icon: path.join(__dirname, { darwin: 'icon.icns', linux: 'icon.png', win32: 'icon.ico' }[process.platform] || 'icon.ico'),
     resizable: true,
-    frame: process.platform !== 'darwin',
+    transparent: true,
+    frame: false,
     skipTaskbar: process.platform === 'darwin',
     autoHideMenuBar: process.platform === 'darwin',
     webPreferences: { zoomFactor: 1.0, nodeIntegration: true, backgroundThrottling: false }
@@ -27,10 +27,11 @@ app.on('ready', () => {
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
   // app.inspect()
 
+  app.win.setBackgroundColor('#01FFFFFF')
+
   app.win.on('closed', () => {
     app.quit()
   })
-
   app.win.on('hide', function () {
     isShown = false
   })
